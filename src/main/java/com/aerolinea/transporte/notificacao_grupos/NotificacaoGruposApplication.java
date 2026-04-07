@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NotificacaoGruposApplication {
 
 	public static void main(String[] args) {
+		System.out.println("Application starting with updated CORS config");
 		SpringApplication.run(NotificacaoGruposApplication.class, args);
 	}
 

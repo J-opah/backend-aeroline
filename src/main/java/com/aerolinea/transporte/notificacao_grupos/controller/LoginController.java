@@ -11,7 +11,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 @Tag(name = "Login", description = "Endpoints for user login")
-//@CrossOrigin(origins = {"http://localhost:1664", "http://localhost:4200"})
+@CrossOrigin(origins = {"https://frontend-aeroline.vercel.app", "http://localhost:4200"})
 public class LoginController {
 
     private final LoginService loginService;
