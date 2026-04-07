@@ -1,25 +1,25 @@
-# Dockerfile para Spring Boot
-FROM eclipse-temurin:17-jdk-jammy
+# Stage 1: Build usando Maven oficial
+FROM maven:3.9.4-eclipse-temurin-17 AS build
 
-# Diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copia o pom.xml e os arquivos de código
-COPY pom.xml mvnw ./
-COPY .mvn .mvn
+# Copia apenas pom.xml e src para aproveitar cache do Docker
+COPY pom.xml .
 COPY src src
 
-# Permite execução do mvnw
-RUN chmod +x mvnw
-
 # Build do projeto
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
-# Copia o JAR gerado
-COPY target/*.jar app.jar
+# Stage 2: Runtime
+FROM eclipse-temurin:17-jdk-jammy
 
-# Porta que o Spring Boot vai expor
+WORKDIR /app
+
+# Copia o JAR do stage de build
+COPY --from=build /app/target/*.jar app.jar
+
+# Expondo a porta do Spring Boot
 EXPOSE 3333
 
-# Comando para rodar a aplicação
+# Comando para iniciar a aplicação
 ENTRYPOINT ["java", "-jar", "app.jar"]
