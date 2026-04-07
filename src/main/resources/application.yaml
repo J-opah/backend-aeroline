@@ -9,7 +9,7 @@ spring:
 #      allow-credentials: true
 
 server:
-  port: 3333
+  port: ${PORT:3333}
 
 springdoc:
   api-docs:
