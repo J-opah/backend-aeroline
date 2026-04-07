@@ -9,6 +9,9 @@ COPY pom.xml mvnw ./
 COPY .mvn .mvn
 COPY src src
 
+# Permite execução do mvnw
+RUN chmod +x mvnw
+
 # Build do projeto
 RUN ./mvnw clean package -DskipTests
 
